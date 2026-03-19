@@ -199,9 +199,9 @@ they matter.
   initial implementation; revisit if experiments show significant unrealised space
   remaining after the first pass.
 
-- When both a left and right candidate survive screening, should both be sub-packed
-  in the same row pass, or only the larger one? Sub-packing both is more thorough
-  but the overflow queue is shared — the left sub-pack depletes it before the right
-  sub-pack runs, potentially leaving the right side with nothing useful to place.
-  **Tentative answer**: attempt both, left first, accepting that the right sub-pack
-  may find little to place if the overflow queue is nearly exhausted.
+- When both a left and right candidate survive screening, in which order should they
+  be sub-packed? The overflow queue is shared, so the first sub-pack depletes it
+  before the second runs. **Resolved**: process candidates in descending order of
+  area — the most promising side gets first pick of the overflow queue. This falls
+  naturally out of the area-based screening ranking and requires no additional
+  logic.
