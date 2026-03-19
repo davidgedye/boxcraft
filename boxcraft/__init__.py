@@ -7,6 +7,7 @@ from boxcraft._packer import Packer, pack, random_context
 from boxcraft._algorithms import available as algorithms, info as algorithm_info
 from boxcraft._algorithms.shelf import ShelfOptions
 from boxcraft._algorithms.glacier import GlacierOptions
+from boxcraft._algorithms.force import ForceOptions
 from boxcraft.render import render_svg
 
 __all__ = [
@@ -24,6 +25,7 @@ __all__ = [
     # Algorithm options
     "ShelfOptions",
     "GlacierOptions",
+    "ForceOptions",
     # Rendering
     "render_svg",
 ]

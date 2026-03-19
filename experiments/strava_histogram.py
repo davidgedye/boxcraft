@@ -183,11 +183,12 @@ print(f"\nSaved → {hist_out}")
 
 # ── Worst / median / best grid ─────────────────────────────────────────────────
 
-CELL_W, CELL_H = 420, 460
+CELL_W, CELL_H = 420, 470
+LABEL_H = 24
 COLS = ["shelf worst", "shelf median", "shelf best", "glacier worst", "glacier median", "glacier best"]
 
 bw_lines = [
-    f'<svg xmlns="http://www.w3.org/2000/svg" width="{CELL_W * 6}" height="{CELL_H * len(NS)}">',
+    f'<svg xmlns="http://www.w3.org/2000/svg" width="{CELL_W * 6}" height="{CELL_H * len(NS) + LABEL_H}">',
     f'  <rect width="100%" height="100%" fill="#0e0e1a"/>',
 ]
 
@@ -218,8 +219,8 @@ for row, n in enumerate(NS):
 for col, label in enumerate(COLS):
     cx = col * CELL_W + CELL_W / 2
     bw_lines.append(
-        f'  <text x="{cx:.0f}" y="{CELL_H * len(NS) - 6}" text-anchor="middle" '
-        f'font-family="monospace" font-size="11" fill="#ffffff55">{label}</text>'
+        f'  <text x="{cx:.0f}" y="{CELL_H * len(NS) + 16}" text-anchor="middle" '
+        f'font-family="monospace" font-size="11" fill="#ffffffcc">{label}</text>'
     )
 
 for col in range(1, 6):

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="784">
+  <rect width="100%" height="100%" fill="#1a1a2e"/>
+  <text x="370.0" y="16" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#ffffffcc">force|n=10|eg=0.001|gap=0.001,0.001|ar=1.000</text>
+  <text x="370.0" y="32" text-anchor="middle" font-family="monospace" font-size="12" fill="#ffffffaa">seed=42 n=10|8.7ms</text>
+  <rect x="20" y="64" width="700.0" height="700.0" fill="#cccccc" stroke="none"/>
+  <rect x="430.60" y="265.91" width="56.14" height="93.14" fill="#5f7bdd" stroke="#1a1a2e" stroke-width="0.8" rx="1"/>
+  <rect x="28.16" y="328.00" width="379.37" height="238.61" fill="#dd5f5f" stroke="#1a1a2e" stroke-width="0.8" rx="1"/>
+  <rect x="377.48" y="103.02" width="112.91" height="157.58" fill="#5fc1dd" stroke="#1a1a2e" stroke-width="0.8" rx="1"/>
+  <rect x="377.47" y="266.09" width="47.72" height="56.51" fill="#5f6ddd" stroke="#1a1a2e" stroke-width="0.8" rx="1"/>
+  <rect x="412.98" y="416.80" width="83.44" height="89.75" fill="#5f88dd" stroke="#1a1a2e" stroke-width="0.8" rx="1"/>
+  <rect x="412.93" y="364.39" width="45.56" height="47.03" fill="#5f6add" stroke="#1a1a2e" stroke-width="0.8" rx="1"/>
+  <rect x="463.92" y="372.61" width="4.09" height="26.89" fill="#5f5fdd" stroke="#1a1a2e" stroke-width="0.8" rx="1"/>
+  <rect x="320.67" y="571.98" width="163.03" height="183.86" fill="#5fddb4" stroke="#1a1a2e" stroke-width="0.8" rx="1"/>
+  <rect x="412.94" y="511.97" width="47.55" height="31.31" fill="#5f66dd" stroke="#1a1a2e" stroke-width="0.8" rx="1"/>
+  <rect x="257.59" y="72.16" width="114.45" height="250.43" fill="#5fddbb" stroke="#1a1a2e" stroke-width="0.8" rx="1"/>
+</svg>
