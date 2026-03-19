@@ -75,14 +75,43 @@ gain of the second-best rectangle is likely small.
 
 ## Step 4: Sub-Pack the Candidate Rectangle
 
-Run a constrained glacier variant on the selected candidate rectangle:
+### Gap accounting
 
-- **Fixed bounding box**: width and height are exactly the candidate rectangle
+The candidate rectangle boundaries are asymmetric with respect to gaps:
+
+- **Top edge**: no gap — sub-pack boxes sit against the row ceiling with nothing above them
+- **Outer vertical edge** (left edge of left candidate, right edge of right candidate):
+  no gap — this aligns flush with the existing inner bounding box edge
+- **Inner vertical edge** (the side facing the mountain peak): inset by `gap_h` —
+  sub-pack boxes must be separated from the adjacent mountain or fill box
+- **Bottom edge**: inset by `gap_v` — sub-pack boxes must clear the skyline below
+
+The effective sub-pack rectangle is therefore narrower by `gap_h` on the inner side
+and shorter by `gap_v` on the bottom. These insets are applied when computing the
+candidate rectangle dimensions passed to the sub-packer.
+
+### Justification
+
+The sub-packer uses **directional justification** rather than centre justification:
+
+- **Left candidate** → right-justified rows
+- **Right candidate** → left-justified rows
+
+This causes the tallest (or densest) boxes in each sub-pack to accumulate toward
+the centre of the main row, naturally extending the mountain silhouette upward.
+The overall row profile remains mountain-shaped at a larger scale, with the
+sub-packed boxes reinforcing the peak rather than introducing an unrelated structure
+at the edges. Mountain ordering within sub-pack rows is therefore **not used** —
+the directional justification achieves the same visual goal more directly.
+
+### Sub-packer behaviour
+
+- **Fixed bounding box**: width and height are the (gap-adjusted) candidate rectangle
   dimensions. No binary search, no aspect ratio targeting.
 - **Row width = candidate width** (fixed).
 - **Same gap_h, gap_v** as the parent pack.
-- **No edge_gap** inside the sub-pack (the candidate rectangle is already inset
-  from the container edge by the parent layout).
+- **No edge_gap** inside the sub-pack (the candidate rectangle is already correctly
+  positioned by the gap insets above).
 - **Input**: the current overflow queue, sorted tallest-first as usual.
 - **Termination**: stop opening new rows when the next row would exceed the
   available height. Return placed items and the updated overflow queue.
@@ -162,9 +191,17 @@ they matter.
 
 - Should the skyline be built from effective box sizes (including gap) or from
   raw box dimensions? Using effective sizes gives correct gap enforcement in the
-  sub-pack but slightly reduces the apparent candidate rectangle size.
-- Should the sub-pack use mountain ordering? Likely yes for visual consistency,
-  but the candidate rectangle may be too narrow for a meaningful mountain shape.
+  sub-pack but slightly reduces the apparent candidate rectangle size. **Tentative
+  answer**: use effective sizes so that gap constraints are respected automatically.
+
 - Is one level of recursion sufficient, or should the sub-pack itself be allowed
-  to trigger a further recursive pass? Initial implementation should be one level
-  only; revisit if experiments show significant unrealised space remaining.
+  to trigger a further recursive pass? **Tentative answer**: one level only for the
+  initial implementation; revisit if experiments show significant unrealised space
+  remaining after the first pass.
+
+- When both a left and right candidate survive screening, should both be sub-packed
+  in the same row pass, or only the larger one? Sub-packing both is more thorough
+  but the overflow queue is shared — the left sub-pack depletes it before the right
+  sub-pack runs, potentially leaving the right side with nothing useful to place.
+  **Tentative answer**: attempt both, left first, accepting that the right sub-pack
+  may find little to place if the overflow queue is nearly exhausted.
