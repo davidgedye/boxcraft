@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "boxcraft"
+version = "0.1.0"
+description = "Efficient and attractive 2D rectangle packing"
+requires-python = ">=3.8"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["boxcraft"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="440">
+  <rect width="100%" height="100%" fill="#0e0e1a"/>
+  <rect x="0" y="0" width="700" height="220" fill="#1a1a2e"/>
+  <text x="350" y="19" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#ffffffcc">n = 10  |  100 seeds  |  gap=5</text>
+  <rect x="50" y="38" width="630" height="154" fill="#0d0d20"/>
+  <line x1="50.0" y1="38" x2="50.0" y2="192" stroke="#ffffff22" stroke-width="1"/>
+  <text x="50.0" y="206" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">40%</text>
+  <line x1="151.6" y1="38" x2="151.6" y2="192" stroke="#ffffff22" stroke-width="1"/>
+  <text x="151.6" y="206" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">50%</text>
+  <line x1="253.2" y1="38" x2="253.2" y2="192" stroke="#ffffff22" stroke-width="1"/>
+  <text x="253.2" y="206" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">60%</text>
+  <line x1="354.8" y1="38" x2="354.8" y2="192" stroke="#ffffff22" stroke-width="1"/>
+  <text x="354.8" y="206" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">70%</text>
+  <line x1="456.5" y1="38" x2="456.5" y2="192" stroke="#ffffff22" stroke-width="1"/>
+  <text x="456.5" y="206" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">80%</text>
+  <line x1="558.1" y1="38" x2="558.1" y2="192" stroke="#ffffff22" stroke-width="1"/>
+  <text x="558.1" y="206" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">90%</text>
+  <line x1="659.7" y1="38" x2="659.7" y2="192" stroke="#ffffff22" stroke-width="1"/>
+  <text x="659.7" y="206" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">100%</text>
+  <rect x="232.9" y="189.1" width="20.3" height="2.9" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="253.2" y="186.1" width="20.3" height="5.9" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="273.5" y="176.3" width="20.3" height="15.7" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="293.9" y="171.4" width="20.3" height="20.6" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="314.2" y="154.7" width="20.3" height="37.3" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="334.5" y="123.3" width="20.3" height="68.7" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="354.8" y="102.7" width="20.3" height="89.3" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="375.2" y="59.6" width="20.3" height="132.4" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="395.5" y="39.0" width="20.3" height="153.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="415.8" y="39.0" width="20.3" height="153.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="436.1" y="65.5" width="20.3" height="126.5" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="456.5" y="110.6" width="20.3" height="81.4" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="476.8" y="137.1" width="20.3" height="54.9" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="497.1" y="169.4" width="20.3" height="22.6" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="517.4" y="181.2" width="20.3" height="10.8" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="537.7" y="188.1" width="20.3" height="3.9" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="558.1" y="190.0" width="20.3" height="2.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="232.9" y="190.0" width="20.3" height="2.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="253.2" y="185.1" width="20.3" height="6.9" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="273.5" y="183.2" width="20.3" height="8.8" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="293.9" y="177.3" width="20.3" height="14.7" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="314.2" y="158.6" width="20.3" height="33.4" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="334.5" y="129.2" width="20.3" height="62.8" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="354.8" y="102.7" width="20.3" height="89.3" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="375.2" y="74.3" width="20.3" height="117.7" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="395.5" y="43.9" width="20.3" height="148.1" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="415.8" y="38.0" width="20.3" height="154.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="436.1" y="55.7" width="20.3" height="136.3" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="456.5" y="90.0" width="20.3" height="102.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="476.8" y="127.3" width="20.3" height="64.7" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="497.1" y="168.5" width="20.3" height="23.5" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="517.4" y="182.2" width="20.3" height="9.8" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="537.7" y="187.1" width="20.3" height="4.9" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="558.1" y="190.0" width="20.3" height="2.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="58" y="42" width="12" height="12" fill="#4a9eddcc"/>
+  <text x="74" y="52" font-family="monospace" font-size="11" fill="#ffffffcc">shelf  mean 75.3%</text>
+  <rect x="58" y="60" width="12" height="12" fill="#e07040cc"/>
+  <text x="74" y="70" font-family="monospace" font-size="11" fill="#ffffffcc">glacier  mean 75.8%</text>
+  <rect x="0" y="220" width="700" height="220" fill="#1a1a2e"/>
+  <text x="350" y="239" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#ffffffcc">n = 100  |  100 seeds  |  gap=5</text>
+  <rect x="50" y="258" width="630" height="154" fill="#0d0d20"/>
+  <line x1="50.0" y1="258" x2="50.0" y2="412" stroke="#ffffff22" stroke-width="1"/>
+  <text x="50.0" y="426" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">40%</text>
+  <line x1="151.6" y1="258" x2="151.6" y2="412" stroke="#ffffff22" stroke-width="1"/>
+  <text x="151.6" y="426" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">50%</text>
+  <line x1="253.2" y1="258" x2="253.2" y2="412" stroke="#ffffff22" stroke-width="1"/>
+  <text x="253.2" y="426" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">60%</text>
+  <line x1="354.8" y1="258" x2="354.8" y2="412" stroke="#ffffff22" stroke-width="1"/>
+  <text x="354.8" y="426" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">70%</text>
+  <line x1="456.5" y1="258" x2="456.5" y2="412" stroke="#ffffff22" stroke-width="1"/>
+  <text x="456.5" y="426" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">80%</text>
+  <line x1="558.1" y1="258" x2="558.1" y2="412" stroke="#ffffff22" stroke-width="1"/>
+  <text x="558.1" y="426" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">90%</text>
+  <line x1="659.7" y1="258" x2="659.7" y2="412" stroke="#ffffff22" stroke-width="1"/>
+  <text x="659.7" y="426" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">100%</text>
+  <rect x="537.7" y="403.1" width="20.3" height="8.9" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="558.1" y="258.0" width="20.3" height="154.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="578.4" y="388.9" width="20.3" height="23.1" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="598.7" y="411.8" width="20.3" height="0.2" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="537.7" y="404.2" width="20.3" height="7.8" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="558.1" y="258.6" width="20.3" height="153.4" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="578.4" y="387.2" width="20.3" height="24.8" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="598.7" y="411.8" width="20.3" height="0.2" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="58" y="262" width="12" height="12" fill="#4a9eddcc"/>
+  <text x="74" y="272" font-family="monospace" font-size="11" fill="#ffffffcc">shelf  mean 91.1%</text>
+  <rect x="58" y="280" width="12" height="12" fill="#e07040cc"/>
+  <text x="74" y="290" font-family="monospace" font-size="11" fill="#ffffffcc">glacier  mean 91.2%</text>
+  <line x1="0" y1="220" x2="700" y2="220" stroke="#ffffff44" stroke-width="1"/>
+</svg>
