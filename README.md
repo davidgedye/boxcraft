@@ -22,25 +22,49 @@ result = bc.pack(boxes, width=500)
 
 print(f"Coverage: {result.coverage:.1%}")
 for p in result.placements:
-    print(f"  {p.box.label}  x={p.x:.1f}  y={p.y:.1f}")
+    print(f"  x={p.x:.1f}  y={p.y:.1f}  {p.width:.1f}×{p.height:.1f}")
 ```
 
-### Options
+### All options and defaults
 
 ```python
 result = bc.pack(
     boxes,
-    infill=True,       # valley fill — place overflow boxes in gaps above shorter row items (default True)
-    balanced=True,     # mountain-order within each row — tallest box in centre (default True)
-    shuffled=True,     # randomise vertical row order (default True)
-    justify="center",  # "center" or "left" — horizontal row alignment (default "center")
-    aspect_ratio=1.0,  # target width/height ratio; mutually exclusive with width
-    width=500,         # fix container width exactly; mutually exclusive with aspect_ratio
-    gap_h=5,           # horizontal gap between boxes
-    gap_v=5,           # vertical gap between boxes
-    edge_gap=5,        # margin between boxes and container edge
-    seed=42,           # random seed — controls shuffled row order
+
+    # Layout behaviour
+    infill=True,        # place overflow boxes in the valley spaces above shorter row items
+    balanced=True,      # mountain-order within each row — tallest box in the centre
+    shuffled=True,      # randomise the vertical order of rows after packing
+    justify="center",   # horizontal row alignment: "center" or "left"
+
+    # Container shape — at most one of these
+    aspect_ratio=None,  # target width/height ratio for the bounding box
+    width=None,         # fix container width exactly and minimise height
+
+    # Spacing
+    gap_h=0.0,          # horizontal gap between adjacent boxes
+    gap_v=0.0,          # vertical gap between adjacent boxes
+    edge_gap=0.0,       # margin between outermost boxes and container edge
+
+    # Reproducibility
+    seed=0,             # int or str seed controlling shuffled row order
 )
+```
+
+### Result
+
+```python
+result.placements        # list[Placement], one per input box, same order as input
+result.bounding_box      # (width, height) of the target container
+result.coverage          # fraction of the container claimed by boxes and their gaps
+result.aspect_ratio      # width / height of bounding_box
+result.wall_time_ms      # packing time in milliseconds
+
+p = result.placements[0]
+p.x, p.y                 # top-left corner of the placed box
+p.width, p.height        # dimensions (proxied from the input Box)
+p.center                 # (cx, cy)
+p.rect                   # (x, y, width, height)
 ```
 
 ### Rendering
@@ -54,11 +78,23 @@ open("output.svg", "w").write(svg)
 
 ## How it works
 
-Boxes are sorted tallest-first and packed greedily into rows using first-fit-decreasing assignment — each row scans all remaining items and defers any that don't fit, producing dense rows.
+Boxes are sorted tallest-first and packed into rows using first-fit-decreasing assignment — each row scans all remaining items and defers any that don't fit, producing dense rows.
 
-With `infill=True` (the default), mountain ordering arranges boxes within each row tallest-in-centre, and overflow boxes are placed into the triangular spaces above shorter items on each side — the **valley fill** step. With `balanced=True`, the resulting silhouette is symmetric, making valley fill most effective.
+With `infill=True` (the default), boxes within each row are mountain-ordered (tallest in the centre, shorter boxes radiating outward), and overflow boxes are placed into the triangular spaces above shorter items on each side — the **valley fill** step. The side with the most open valley space is filled first.
 
-With `aspect_ratio` or `width` set, a binary search finds the row width that hits the target; valley fill is included in this estimate so the result is accurate.
+With `aspect_ratio` or `width` set, a binary search finds the row width that hits the target; valley fill is accounted for in this search so the result is accurate.
+
+## Dataset
+
+`datasets/gps_trails_bounding_boxes.json` contains the bounding boxes of 3,289 GPS-tracked outdoor activities (runs, hikes, walks, snowshoe). Each record has three fields:
+
+| Field | Description |
+|---|---|
+| `width` | longitude span of the GPS track (normalised) |
+| `height` | latitude span of the GPS track (normalised) |
+| `sport` | `Run`, `Hike`, `Walk`, or `Snowshoe` |
+
+The distribution is heavily skewed — most activities cover a small area, with a long tail of larger ones. This makes it a useful test dataset for packing algorithms: the size variation is much higher than a uniform distribution, creating both very dense and very sparse packing challenges depending on which activities are sampled.
 
 ## Installation
 
@@ -72,7 +108,7 @@ pip install -e .
 boxcraft/       Python package (algorithms, types, renderer)
 experiments/    A/B comparisons and coverage histograms
 datasets/       Rectangle datasets for experiments
-utils/          Data import scripts (e.g. Strava GPS history)
+utils/          Data preparation scripts
 tests/          Correctness and benchmark tests
 ```
 
