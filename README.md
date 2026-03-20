@@ -19,7 +19,14 @@ import boxcraft as bc
 
 boxes = [bc.Box(width, height) for width, height in my_data]
 
+# Free layout — aspect ratio determined heuristically
+result = bc.pack(boxes, algorithm="glacier", gap_h=5, gap_v=5, edge_gap=5)
+
+# Target a specific aspect ratio
 result = bc.pack(boxes, algorithm="glacier", aspect_ratio=1.0, gap_h=5, gap_v=5, edge_gap=5)
+
+# Fix the container width and minimise height (e.g. for scrolling interfaces)
+result = bc.pack(boxes, algorithm="glacier", width=500, gap_h=5, gap_v=5, edge_gap=5)
 
 print(f"Coverage: {result.coverage:.1%}")
 for p in result.placements:
@@ -40,7 +47,8 @@ open("output.svg", "w").write(svg)
 ```python
 packer = bc.Packer(
     algorithm="glacier",   # "shelf" or "glacier"
-    aspect_ratio=1.5,      # target width/height ratio (None for free)
+    aspect_ratio=1.5,      # target width/height ratio (None for free); mutually exclusive with width
+    width=500,             # fix container width and minimise height; mutually exclusive with aspect_ratio
     gap_h=5,               # horizontal gap between boxes
     gap_v=5,               # vertical gap between boxes
     edge_gap=5,            # margin between boxes and container edge

@@ -231,6 +231,7 @@ def pack(
     gap_v: float,
     edge_gap: float,
     aspect_ratio: float | None,
+    width: float | None = None,
     rng: random.Random,
     options: GlacierOptions | None = None,
 ) -> list[Placement]:
@@ -245,7 +246,13 @@ def pack(
     w_max = sum(b.width for b in boxes) + (len(boxes) - 1) * gap_h + 2 * edge_gap
 
     # ── Find the right row width ─────────────────────────────────────────────
-    if aspect_ratio is None:
+    if width is not None:
+        if width < w_min:
+            raise ValueError(
+                f"width {width} is too narrow: the widest box requires at least {w_min}"
+            )
+        row_width = width
+    elif aspect_ratio is None:
         row_width = max(math.sqrt(total_area), w_min)
         # Verify the widest box fits
         inner_check = row_width - 2 * edge_gap
@@ -330,7 +337,7 @@ def pack(
             result[i] = Placement(box=boxes[i], x=edge_gap, y=edge_gap)
 
     # ── Vertical centering within the aspect-ratio container ─────────────────
-    if aspect_ratio is not None:
+    if aspect_ratio is not None and width is None:
         tight_h = max(p.y + p.height for p in result if p is not None) + edge_gap  # type: ignore[union-attr]
         target_h = row_width / aspect_ratio
         if target_h > tight_h:

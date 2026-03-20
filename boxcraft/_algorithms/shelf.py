@@ -189,6 +189,7 @@ def pack(
     gap_v: float,
     edge_gap: float,
     aspect_ratio: float | None,
+    width: float | None = None,
     rng: random.Random,
     options: ShelfOptions | None = None,
 ) -> list[Placement]:
@@ -205,7 +206,16 @@ def pack(
     ff = opts.first_fit
 
     # ── Find the right row width ─────────────────────────────────────────────
-    if aspect_ratio is None:
+    if width is not None:
+        if width < w_min:
+            raise ValueError(
+                f"width {width} is too narrow: the widest box requires at least {w_min}"
+            )
+        row_width = width
+        rows = _assign_rows(sorted_pairs, row_width, gap_h, edge_gap, ff)
+        if rows is None:
+            rows = []
+    elif aspect_ratio is None:
         row_width = max(math.sqrt(total_area), w_min)
         rows = _assign_rows(sorted_pairs, row_width, gap_h, edge_gap, ff)
         if rows is None:

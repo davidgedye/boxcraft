@@ -53,6 +53,7 @@ class PackResult:
     _gap_v: float = field(default=0.0, repr=False)
     _edge_gap: float = field(default=0.0, repr=False)
     _target_aspect_ratio: float | None = field(default=None, repr=False)
+    _target_width: float | None = field(default=None, repr=False)
 
     @property
     def tight_bounding_box(self) -> tuple[float, float]:
@@ -70,12 +71,18 @@ class PackResult:
         """
         (width, height) of the target container.
 
+        When width was specified, this is (width, tight_height) — the container
+        is exactly that wide and as tall as the packing requires.
+
         When aspect_ratio was specified, this is the smallest rectangle with
         that exact ratio enclosing all placements — i.e. what the user's
-        container actually looks like.  When no aspect_ratio was given, this
-        equals tight_bounding_box.
+        container actually looks like.
+
+        When neither was given, this equals tight_bounding_box.
         """
         w, h = self.tight_bounding_box
+        if self._target_width is not None:
+            return (self._target_width, h)
         if self._target_aspect_ratio is None:
             return (w, h)
         # Expand whichever dimension is short to match the target ratio.

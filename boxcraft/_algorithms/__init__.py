@@ -2,12 +2,10 @@ from __future__ import annotations
 
 from boxcraft._algorithms.shelf import ShelfOptions, pack as shelf_pack
 from boxcraft._algorithms.glacier import GlacierOptions, pack as glacier_pack
-from boxcraft._algorithms.force import ForceOptions, pack as force_pack
 
 _REGISTRY: dict[str, object] = {
     "shelf": shelf_pack,
     "glacier": glacier_pack,
-    "force": force_pack,
 }
 
 _INFO: dict[str, dict] = {
@@ -29,16 +27,6 @@ _INFO: dict[str, dict] = {
             "Better coverage than shelf, especially for varied box sizes."
         ),
         "options": GlacierOptions,
-    },
-    "force": {
-        "name": "force",
-        "description": (
-            "Force-directed packing. Boxes repel each other when overlapping "
-            "and are attracted toward a common centre by a decaying gravity. "
-            "Produces organic, non-grid layouts. O(n²) per iteration — best "
-            "suited to small sets (n ≲ 30)."
-        ),
-        "options": ForceOptions,
     },
 }
 

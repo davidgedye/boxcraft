@@ -47,6 +47,8 @@ class Packer:
     ----------
     algorithm     : name of the packing algorithm (see bc.algorithms())
     aspect_ratio  : required width/height ratio for the bounding box; None = free
+    width         : fix the container width exactly and minimise height; mutually
+                    exclusive with aspect_ratio
     gap_h         : horizontal gap between adjacent boxes
     gap_v         : vertical gap between adjacent boxes
     edge_gap      : margin between outermost boxes and bounding box edge (default 0)
@@ -59,15 +61,19 @@ class Packer:
         algorithm: str = "shelf",
         *,
         aspect_ratio: float | None = None,
+        width: float | None = None,
         gap_h: float = 0.0,
         gap_v: float = 0.0,
         edge_gap: float = 0.0,
         seed: int | str = 0,
         options: object = None,
     ) -> None:
+        if aspect_ratio is not None and width is not None:
+            raise ValueError("aspect_ratio and width are mutually exclusive")
         self._algo_name = algorithm
         self._algo_fn = _get_algo(algorithm)
         self._aspect_ratio = aspect_ratio
+        self._width = width
         self._gap_h = gap_h
         self._gap_v = gap_v
         self._edge_gap = edge_gap
@@ -90,6 +96,7 @@ class Packer:
             gap_v=self._gap_v,
             edge_gap=self._edge_gap,
             aspect_ratio=self._aspect_ratio,
+            width=self._width,
             rng=self._rng,
             options=self._options,
         )
@@ -103,6 +110,7 @@ class Packer:
             _gap_v=self._gap_v,
             _edge_gap=self._edge_gap,
             _target_aspect_ratio=self._aspect_ratio,
+            _target_width=self._width,
         )
 
     def reset(self) -> None:
@@ -119,6 +127,7 @@ def pack(
     algorithm: str = "shelf",
     *,
     aspect_ratio: float | None = None,
+    width: float | None = None,
     gap_h: float = 0.0,
     gap_v: float = 0.0,
     edge_gap: float = 0.0,
@@ -136,6 +145,7 @@ def pack(
     packer = Packer(
         algorithm=algorithm,
         aspect_ratio=aspect_ratio,
+        width=width,
         gap_h=gap_h,
         gap_v=gap_v,
         edge_gap=edge_gap,
