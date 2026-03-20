@@ -1,18 +1,13 @@
 """
 Shelf (strip) packing algorithm.
 
-Boxes are sorted tallest-first and packed greedily left-to-right into rows.
-Within each row boxes are bottom-aligned, so shorter boxes sit flush with the
-row bottom leaving open space above them.
+Boxes are sorted tallest-first and packed greedily left-to-right into rows
+using first-fit-decreasing assignment: each row scans all remaining items and
+defers any that don't fit, producing denser rows at the cost of O(n²) row
+assignment.  Within each row boxes are bottom-aligned.
 
 Options
 -------
-first_fit : bool (default False)
-    When True, use first-fit-decreasing row assignment: scan all remaining
-    items for each row and skip (defer) any that don't fit, rather than
-    closing the row at the first non-fitting item.  Produces denser rows and
-    meaningfully better coverage, at the cost of O(n²) row assignment.
-
 balanced : bool (default False)
     Reorder boxes within each row so the tallest lands in the centre, with
     shorter boxes radiating outward symmetrically — a mountain silhouette.
@@ -35,7 +30,6 @@ from boxcraft._types import Box, Placement
 
 @dataclass
 class ShelfOptions:
-    first_fit: bool = True        # first-fit-decreasing row assignment (better coverage, O(n²))
     balanced: bool = False        # mountain-order boxes within each row
     shuffled: bool = False        # shuffle row order after packing
     justify: str = "center"       # horizontal row alignment: "left" or "center"
@@ -50,67 +44,36 @@ def _assign_rows(
     row_width: float,
     gap_h: float,
     edge_gap: float,
-    first_fit: bool = False,
-) -> list[list[tuple[int, Box]]] | None:
+) -> list[list[tuple[int, Box]]]:
     """
-    Assign boxes to rows of inner width (row_width - 2*edge_gap).
-
-    first_fit=False (default): classic greedy shelf — close the row at the
-        first non-fitting item.  Returns None if any box is wider than
-        inner_w (signals binary search to try a wider row_width).
-
-    first_fit=True: scan all remaining items for each row, deferring any
-        that don't fit.  Never returns None; boxes wider than inner_w are
-        silently deferred until they become the only candidate (then placed
-        alone, or dropped if they truly can't fit).
+    First-fit-decreasing row assignment: scan all remaining items for each
+    row, deferring any that don't fit.  Boxes wider than inner_w are deferred
+    until they become the only candidate (placed alone on a row).
     """
     inner_w = row_width - 2 * edge_gap
     rows: list[list[tuple[int, Box]]] = []
-
-    if first_fit:
-        queue = list(sorted_pairs)
-        while queue:
-            row: list[tuple[int, Box]] = []
-            leftover: list[tuple[int, Box]] = []
-            cur_x = 0.0
-            for orig_idx, box in queue:
-                bw = box.width
-                if bw > inner_w:
-                    leftover.append((orig_idx, box))
-                    continue
-                if not row:
-                    row.append((orig_idx, box))
-                    cur_x = bw
-                elif cur_x + gap_h + bw <= inner_w:
-                    row.append((orig_idx, box))
-                    cur_x += gap_h + bw
-                else:
-                    leftover.append((orig_idx, box))
-            if not row:
-                break
-            rows.append(row)
-            queue = leftover
-    else:
-        cur_row: list[tuple[int, Box]] = []
+    queue = list(sorted_pairs)
+    while queue:
+        row: list[tuple[int, Box]] = []
+        leftover: list[tuple[int, Box]] = []
         cur_x = 0.0
-        for orig_idx, box in sorted_pairs:
+        for orig_idx, box in queue:
             bw = box.width
             if bw > inner_w:
-                return None
-            if cur_row:
-                if cur_x + gap_h + bw <= inner_w:
-                    cur_row.append((orig_idx, box))
-                    cur_x += gap_h + bw
-                else:
-                    rows.append(cur_row)
-                    cur_row = [(orig_idx, box)]
-                    cur_x = bw
-            else:
-                cur_row = [(orig_idx, box)]
+                leftover.append((orig_idx, box))
+                continue
+            if not row:
+                row.append((orig_idx, box))
                 cur_x = bw
-        if cur_row:
-            rows.append(cur_row)
-
+            elif cur_x + gap_h + bw <= inner_w:
+                row.append((orig_idx, box))
+                cur_x += gap_h + bw
+            else:
+                leftover.append((orig_idx, box))
+        if not row:
+            break
+        rows.append(row)
+        queue = leftover
     return rows
 
 
@@ -203,8 +166,6 @@ def pack(
     w_min = max(b.width for b in boxes) + 2 * edge_gap
     w_max = sum(b.width for b in boxes) + (len(boxes) - 1) * gap_h + 2 * edge_gap
 
-    ff = opts.first_fit
-
     # ── Find the right row width ─────────────────────────────────────────────
     if width is not None:
         if width < w_min:
@@ -212,36 +173,28 @@ def pack(
                 f"width {width} is too narrow: the widest box requires at least {w_min}"
             )
         row_width = width
-        rows = _assign_rows(sorted_pairs, row_width, gap_h, edge_gap, ff)
-        if rows is None:
-            rows = []
+        rows = _assign_rows(sorted_pairs, row_width, gap_h, edge_gap)
     elif aspect_ratio is None:
         row_width = max(math.sqrt(total_area), w_min)
-        rows = _assign_rows(sorted_pairs, row_width, gap_h, edge_gap, ff)
-        if rows is None:
-            row_width = w_max
-            rows = _assign_rows(sorted_pairs, row_width, gap_h, edge_gap, ff)
+        rows = _assign_rows(sorted_pairs, row_width, gap_h, edge_gap)
     else:
         lo, hi = w_min, w_max
         best_rows: list[list[tuple[int, Box]]] | None = None
         best_row_width = w_max
         for _ in range(15):
             mid = (lo + hi) / 2
-            candidate = _assign_rows(sorted_pairs, mid, gap_h, edge_gap, ff)
-            if candidate is None:
-                lo = mid
-                continue
+            candidate = _assign_rows(sorted_pairs, mid, gap_h, edge_gap)
             row_heights = [max(b.height for _, b in row) for row in candidate]
             bb_w = mid
             bb_h = sum(row_heights) + gap_v * (len(row_heights) - 1) + 2 * edge_gap
-            if bb_w / bb_h < aspect_ratio:
+            if bb_h == 0.0 or bb_w / bb_h < aspect_ratio:
                 lo = mid
             else:
                 hi = mid
                 best_rows = candidate
                 best_row_width = mid
         row_width = best_row_width
-        rows = best_rows or _assign_rows(sorted_pairs, w_max, gap_h, edge_gap, ff)
+        rows = best_rows or _assign_rows(sorted_pairs, w_max, gap_h, edge_gap)
 
     if not rows:
         rows = []

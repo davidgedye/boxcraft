@@ -4,14 +4,6 @@
 
 boxcraft packs a collection of rectangles into a compact, visually pleasing layout. It is designed for real-world use cases where both coverage (minimising wasted space) and aesthetics (balanced, readable arrangements) matter.
 
-## Algorithms
-
-### Shelf
-Greedy row packing with first-fit-decreasing assignment. Boxes are sorted tallest-first and packed into rows, with shorter boxes deferred to later positions in the same row rather than immediately starting a new one. Optional mountain ordering arranges boxes within each row tallest-in-centre for a balanced silhouette.
-
-### Glacier
-Extends shelf with **valley fill**: overflow boxes that don't fit in a row are placed in the triangular space above shorter boxes on either side of the mountain. Fill boxes fly over any mountain item they can vertically clear, pushing as far inward as possible to free the outer strip for subsequent fills. The binary search that determines row width accounts for valley fill, so the target aspect ratio is hit accurately.
-
 ## Usage
 
 ```python
@@ -20,17 +12,35 @@ import boxcraft as bc
 boxes = [bc.Box(width, height) for width, height in my_data]
 
 # Free layout — aspect ratio determined heuristically
-result = bc.pack(boxes, algorithm="glacier", gap_h=5, gap_v=5, edge_gap=5)
+result = bc.pack(boxes)
 
 # Target a specific aspect ratio
-result = bc.pack(boxes, algorithm="glacier", aspect_ratio=1.0, gap_h=5, gap_v=5, edge_gap=5)
+result = bc.pack(boxes, aspect_ratio=1.0)
 
 # Fix the container width and minimise height (e.g. for scrolling interfaces)
-result = bc.pack(boxes, algorithm="glacier", width=500, gap_h=5, gap_v=5, edge_gap=5)
+result = bc.pack(boxes, width=500)
 
 print(f"Coverage: {result.coverage:.1%}")
 for p in result.placements:
     print(f"  {p.box.label}  x={p.x:.1f}  y={p.y:.1f}")
+```
+
+### Options
+
+```python
+result = bc.pack(
+    boxes,
+    infill=True,       # valley fill — place overflow boxes in gaps above shorter row items (default True)
+    balanced=True,     # mountain-order within each row — tallest box in centre (default True)
+    shuffled=True,     # randomise vertical row order (default True)
+    justify="center",  # "center" or "left" — horizontal row alignment (default "center")
+    aspect_ratio=1.0,  # target width/height ratio; mutually exclusive with width
+    width=500,         # fix container width exactly; mutually exclusive with aspect_ratio
+    gap_h=5,           # horizontal gap between boxes
+    gap_v=5,           # vertical gap between boxes
+    edge_gap=5,        # margin between boxes and container edge
+    seed=42,           # random seed — controls shuffled row order
+)
 ```
 
 ### Rendering
@@ -42,42 +52,13 @@ svg = render_svg(result)
 open("output.svg", "w").write(svg)
 ```
 
-### Packer API
+## How it works
 
-```python
-packer = bc.Packer(
-    algorithm="glacier",   # "shelf" or "glacier"
-    aspect_ratio=1.5,      # target width/height ratio (None for free); mutually exclusive with width
-    width=500,             # fix container width and minimise height; mutually exclusive with aspect_ratio
-    gap_h=5,               # horizontal gap between boxes
-    gap_v=5,               # vertical gap between boxes
-    edge_gap=5,            # margin between boxes and container edge
-    seed=42,               # random seed (used by shuffled option)
-)
-packer.add_many(boxes)
-result = packer.pack()
-```
+Boxes are sorted tallest-first and packed greedily into rows using first-fit-decreasing assignment — each row scans all remaining items and defers any that don't fit, producing dense rows.
 
-### Options
+With `infill=True` (the default), mountain ordering arranges boxes within each row tallest-in-centre, and overflow boxes are placed into the triangular spaces above shorter items on each side — the **valley fill** step. With `balanced=True`, the resulting silhouette is symmetric, making valley fill most effective.
 
-```python
-from boxcraft import ShelfOptions, GlacierOptions
-
-# Shelf
-bc.pack(boxes, algorithm="shelf", options=ShelfOptions(
-    first_fit=True,    # first-fit-decreasing row assignment (default True)
-    balanced=False,    # mountain-order boxes within rows
-    shuffled=False,    # randomise vertical row order
-    justify="center",  # "center" or "left"
-))
-
-# Glacier
-bc.pack(boxes, algorithm="glacier", options=GlacierOptions(
-    balanced=True,     # mountain-order boxes within rows (default True)
-    shuffled=False,    # randomise vertical row order
-    justify="center",  # "center" or "left"
-))
-```
+With `aspect_ratio` or `width` set, a binary search finds the row width that hits the target; valley fill is included in this estimate so the result is accurate.
 
 ## Installation
 

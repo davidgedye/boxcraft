@@ -95,9 +95,19 @@ def _valley_fill(
     placed: list[tuple[int, float, float]] = []
     remaining = list(candidates)
 
-    for side in ("left", "right"):
-        edge_items = mtn_info if side == "left" else list(reversed(mtn_info))
+    def _valley_area(items: list[tuple[int, float, float, float]]) -> float:
+        """Sum of open space above each outer item: (row_h - h_k) * w_k."""
+        return sum((row_h - h_k) * w_k for _, _x, w_k, h_k in items)
 
+    left_items  = mtn_info
+    right_items = list(reversed(mtn_info))
+    sides = (
+        ("left",  left_items,  _valley_area(left_items)),
+        ("right", right_items, _valley_area(right_items)),
+    )
+    ordered_sides = sorted(sides, key=lambda s: -s[2])
+
+    for side, edge_items, _ in ordered_sides:
         if side == "left":
             x_ref = edge_items[0][1]
         else:

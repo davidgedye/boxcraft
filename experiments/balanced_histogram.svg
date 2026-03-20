@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="440">
+  <rect width="100%" height="100%" fill="#0e0e1a"/>
+  <rect x="0" y="0" width="700" height="220" fill="#1a1a2e"/>
+  <text x="350" y="19" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#ffffffcc">glacier: balanced vs unbalanced  |  strava  n=10  |  100 seeds  ar=1.0</text>
+  <rect x="50" y="38" width="630" height="154" fill="#0d0d20"/>
+  <line x1="50.0" y1="38" x2="50.0" y2="192" stroke="#ffffff22" stroke-width="1"/>
+  <text x="50.0" y="206" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">40%</text>
+  <line x1="151.6" y1="38" x2="151.6" y2="192" stroke="#ffffff22" stroke-width="1"/>
+  <text x="151.6" y="206" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">50%</text>
+  <line x1="253.2" y1="38" x2="253.2" y2="192" stroke="#ffffff22" stroke-width="1"/>
+  <text x="253.2" y="206" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">60%</text>
+  <line x1="354.8" y1="38" x2="354.8" y2="192" stroke="#ffffff22" stroke-width="1"/>
+  <text x="354.8" y="206" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">70%</text>
+  <line x1="456.5" y1="38" x2="456.5" y2="192" stroke="#ffffff22" stroke-width="1"/>
+  <text x="456.5" y="206" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">80%</text>
+  <line x1="558.1" y1="38" x2="558.1" y2="192" stroke="#ffffff22" stroke-width="1"/>
+  <text x="558.1" y="206" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">90%</text>
+  <line x1="659.7" y1="38" x2="659.7" y2="192" stroke="#ffffff22" stroke-width="1"/>
+  <text x="659.7" y="206" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">100%</text>
+  <rect x="50.0" y="181.0" width="20.3" height="11.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="70.3" y="148.0" width="20.3" height="44.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="90.6" y="181.0" width="20.3" height="11.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="111.0" y="181.0" width="20.3" height="11.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="131.3" y="181.0" width="20.3" height="11.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="151.6" y="181.0" width="20.3" height="11.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="171.9" y="181.0" width="20.3" height="11.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="192.3" y="159.0" width="20.3" height="33.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="212.6" y="181.0" width="20.3" height="11.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="253.2" y="170.0" width="20.3" height="22.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="273.5" y="137.0" width="20.3" height="55.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="293.9" y="126.0" width="20.3" height="66.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="314.2" y="93.0" width="20.3" height="99.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="334.5" y="104.0" width="20.3" height="88.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="354.8" y="71.0" width="20.3" height="121.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="375.2" y="49.0" width="20.3" height="143.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="395.5" y="82.0" width="20.3" height="110.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="415.8" y="115.0" width="20.3" height="77.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="436.1" y="115.0" width="20.3" height="77.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="456.5" y="137.0" width="20.3" height="55.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="476.8" y="170.0" width="20.3" height="22.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="497.1" y="181.0" width="20.3" height="11.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="50.0" y="181.0" width="20.3" height="11.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="70.3" y="148.0" width="20.3" height="44.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="90.6" y="181.0" width="20.3" height="11.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="111.0" y="181.0" width="20.3" height="11.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="131.3" y="181.0" width="20.3" height="11.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="171.9" y="181.0" width="20.3" height="11.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="192.3" y="159.0" width="20.3" height="33.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="212.6" y="181.0" width="20.3" height="11.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="253.2" y="181.0" width="20.3" height="11.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="273.5" y="115.0" width="20.3" height="77.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="293.9" y="148.0" width="20.3" height="44.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="314.2" y="104.0" width="20.3" height="88.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="334.5" y="115.0" width="20.3" height="77.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="354.8" y="38.0" width="20.3" height="154.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="375.2" y="71.0" width="20.3" height="121.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="395.5" y="49.0" width="20.3" height="143.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="415.8" y="159.0" width="20.3" height="33.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="436.1" y="93.0" width="20.3" height="99.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="456.5" y="126.0" width="20.3" height="66.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="476.8" y="170.0" width="20.3" height="22.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="497.1" y="181.0" width="20.3" height="11.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="537.7" y="181.0" width="20.3" height="11.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="58" y="42" width="12" height="12" fill="#e07040cc"/>
+  <text x="74" y="52" font-family="monospace" font-size="11" fill="#ffffffcc">balanced  mean 68.8%</text>
+  <rect x="58" y="60" width="12" height="12" fill="#4a9eddcc"/>
+  <text x="74" y="70" font-family="monospace" font-size="11" fill="#ffffffcc">unbalanced  mean 69.3%</text>
+  <rect x="0" y="220" width="700" height="220" fill="#1a1a2e"/>
+  <text x="350" y="239" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#ffffffcc">glacier: balanced vs unbalanced  |  strava  n=100  |  100 seeds  ar=1.0</text>
+  <rect x="50" y="258" width="630" height="154" fill="#0d0d20"/>
+  <line x1="50.0" y1="258" x2="50.0" y2="412" stroke="#ffffff22" stroke-width="1"/>
+  <text x="50.0" y="426" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">40%</text>
+  <line x1="151.6" y1="258" x2="151.6" y2="412" stroke="#ffffff22" stroke-width="1"/>
+  <text x="151.6" y="426" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">50%</text>
+  <line x1="253.2" y1="258" x2="253.2" y2="412" stroke="#ffffff22" stroke-width="1"/>
+  <text x="253.2" y="426" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">60%</text>
+  <line x1="354.8" y1="258" x2="354.8" y2="412" stroke="#ffffff22" stroke-width="1"/>
+  <text x="354.8" y="426" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">70%</text>
+  <line x1="456.5" y1="258" x2="456.5" y2="412" stroke="#ffffff22" stroke-width="1"/>
+  <text x="456.5" y="426" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">80%</text>
+  <line x1="558.1" y1="258" x2="558.1" y2="412" stroke="#ffffff22" stroke-width="1"/>
+  <text x="558.1" y="426" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">90%</text>
+  <line x1="659.7" y1="258" x2="659.7" y2="412" stroke="#ffffff22" stroke-width="1"/>
+  <text x="659.7" y="426" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff88">100%</text>
+  <rect x="415.8" y="402.1" width="20.3" height="9.9" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="436.1" y="402.1" width="20.3" height="9.9" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="456.5" y="397.1" width="20.3" height="14.9" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="476.8" y="362.3" width="20.3" height="49.7" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="497.1" y="322.6" width="20.3" height="89.4" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="517.4" y="258.0" width="20.3" height="154.0" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="537.7" y="292.8" width="20.3" height="119.2" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="558.1" y="362.3" width="20.3" height="49.7" fill="#e07040cc" stroke="#a04010" stroke-width="0.5"/>
+  <rect x="415.8" y="402.1" width="20.3" height="9.9" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="436.1" y="402.1" width="20.3" height="9.9" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="456.5" y="382.2" width="20.3" height="29.8" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="476.8" y="377.2" width="20.3" height="34.8" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="497.1" y="272.9" width="20.3" height="139.1" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="517.4" y="258.0" width="20.3" height="154.0" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="537.7" y="317.6" width="20.3" height="94.4" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="558.1" y="387.2" width="20.3" height="24.8" fill="#4a9eddcc" stroke="#2a6ea8" stroke-width="0.5"/>
+  <rect x="58" y="262" width="12" height="12" fill="#e07040cc"/>
+  <text x="74" y="272" font-family="monospace" font-size="11" fill="#ffffffcc">balanced  mean 86.6%</text>
+  <rect x="58" y="280" width="12" height="12" fill="#4a9eddcc"/>
+  <text x="74" y="290" font-family="monospace" font-size="11" fill="#ffffffcc">unbalanced  mean 86.1%</text>
+  <line x1="0" y1="220" x2="700" y2="220" stroke="#ffffff44" stroke-width="1"/>
+</svg>
