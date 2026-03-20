@@ -1,26 +1,27 @@
-"""Render strava dataset packing side by side: shelf vs glacier."""
+"""Render GPS trails dataset packing side by side: shelf (infill=False) vs glacier (infill=True)."""
 
 from __future__ import annotations
 
 import json
+import random
 from pathlib import Path
 
 import boxcraft as bc
-from boxcraft._algorithms.glacier import GlacierOptions
 from boxcraft import render_svg
 
-rects = json.loads(Path("datasets/2026-03.json").read_text())
-boxes = [bc.Box(r["width"], r["height"], label=r["id"], data=r) for r in rects]
+rects = json.loads((Path(__file__).parent.parent / "datasets" / "gps_trails_bounding_boxes.json").read_text())
+all_boxes = [bc.Box(r["width"], r["height"], data=r) for r in rects]
+
+rng = random.Random(0)
+boxes = rng.sample(all_boxes, 20)
 
 cases = []
-for algo in ("shelf", "glacier"):
-    opts = GlacierOptions(shuffled=True) if algo == "glacier" else None
-    packer = bc.Packer(algorithm=algo, aspect_ratio=2/3, gap_h=0.001, gap_v=0.001, edge_gap=0.001, options=opts)
-    packer.add_many(boxes)
-    result = packer.pack()
-    cases.append((result, algo))
-    valley = sum(1 for p in result.placements if p.meta and p.meta.get("valley_fill"))
-    print(f"{algo:8s}  coverage={result.coverage:.1%}  valley_fills={valley}")
+for infill in (False, True):
+    result = bc.pack(boxes, infill=infill, aspect_ratio=2/3,
+                     gap_h=0.001, gap_v=0.001, edge_gap=0.001, seed=0)
+    label = "infill" if infill else "shelf"
+    cases.append((result, label))
+    print(f"{label:8s}  coverage={result.coverage:.1%}")
 
 CELL_W, CELL_H = 540, 580
 SVG_W, SVG_H = CELL_W * 2, CELL_H
@@ -45,6 +46,6 @@ for col, (result, subtitle) in enumerate(cases):
 lines.append(f'  <line x1="{CELL_W}" y1="0" x2="{CELL_W}" y2="{CELL_H}" stroke="#ffffff44" stroke-width="1"/>')
 lines.append('</svg>')
 
-out = "strava_2026_03.svg"
-Path(out).write_text("\n".join(lines))
+out = Path(__file__).parent / "render_strava_output.svg"
+out.write_text("\n".join(lines))
 print(f"\nSaved → {out}")

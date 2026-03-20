@@ -15,10 +15,10 @@ NS = [10, 100]
 SEEDS = range(1000)
 GAP = 0.001
 ASPECT = 1.0
-DATASET = Path(__file__).parent.parent / "datasets" / "strava-activities-2012-2026.json"
+DATASET = Path(__file__).parent.parent / "datasets" / "gps_trails_bounding_boxes.json"
 
 rects = json.loads(DATASET.read_text())
-all_boxes = [bc.Box(r["width"], r["height"], label=r["id"], data=r) for r in rects]
+all_boxes = [bc.Box(r["width"], r["height"], data=r) for r in rects]
 
 # ── Collect data ───────────────────────────────────────────────────────────────
 

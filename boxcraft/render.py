@@ -33,7 +33,7 @@ def render_svg(
 
     # Auto-build title from result metadata
     gap_h, gap_v = result._gap_h, result._gap_v
-    parts = [result.algorithm, f"n={n}"]
+    parts = [f"n={n}"]
     if result._edge_gap:
         parts.append(f"eg={result._edge_gap:g}")
     parts.append(f"gap={gap_h:g},{gap_v:g}")

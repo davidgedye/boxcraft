@@ -16,7 +16,7 @@ SEEDS = range(100)
 GAP = 0.001
 EDGE_GAP = 0.001
 WIDTH = 0.2
-DATASET = Path(__file__).parent.parent / "datasets" / "strava-activities-2012-2026.json"
+DATASET = Path(__file__).parent.parent / "datasets" / "gps_trails_bounding_boxes.json"
 
 COLORS = {
     "shelf":   ("#4a9edd", "#2a6ea8"),
@@ -24,7 +24,7 @@ COLORS = {
 }
 
 rects = json.loads(DATASET.read_text())
-all_boxes = [bc.Box(r["width"], r["height"], label=r["id"], data=r) for r in rects]
+all_boxes = [bc.Box(r["width"], r["height"], data=r) for r in rects]
 
 # ── Collect data ────────────────────────────────────────────────────────────────
 
