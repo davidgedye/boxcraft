@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "boxcraft"
-version = "0.1.0"
+version = "0.2.0"
 description = "Efficient and attractive 2D rectangle packing"
 requires-python = ">=3.8"
 dependencies = []
