@@ -11,8 +11,8 @@ import boxcraft as bc
 from boxcraft import render_svg
 
 VARIANTS = [
-    ("balanced",   bc.GlacierOptions(balanced=True)),
-    ("unbalanced", bc.GlacierOptions(balanced=False)),
+    ("balanced",   True),
+    ("unbalanced", False),
 ]
 NS = [10, 100]
 SEEDS = range(100)
@@ -34,7 +34,7 @@ data: dict[tuple[str, int], list[float]] = {}
 notables: dict[tuple[str, int], dict[str, tuple[int, bc.PackResult]]] = {}
 
 for n in NS:
-    for label, opts in VARIANTS:
+    for label, balanced in VARIANTS:
         coverages: list[float] = []
         best_seed,  best_result,  best_cov  = -1, None, -1.0
         worst_seed, worst_result, worst_cov = -1, None,  2.0
@@ -42,11 +42,8 @@ for n in NS:
         for seed in SEEDS:
             rng = random.Random(seed)
             boxes = rng.sample(all_boxes, n)
-            packer = bc.Packer(algorithm="glacier", aspect_ratio=ASPECT,
-                               gap_h=GAP, gap_v=GAP, edge_gap=GAP,
-                               seed=seed, options=opts)
-            packer.add_many(boxes)
-            result = packer.pack()
+            result = bc.pack(boxes, infill=True, balanced=balanced, aspect_ratio=ASPECT,
+                             gap_h=GAP, gap_v=GAP, edge_gap=GAP, seed=seed)
             cov = result.coverage
             coverages.append(cov * 100)
             if cov > best_cov:
@@ -58,11 +55,8 @@ for n in NS:
         median_seed = min(SEEDS, key=lambda s: abs(coverages[s] - med))
         rng = random.Random(median_seed)
         boxes = rng.sample(all_boxes, n)
-        packer = bc.Packer(algorithm="glacier", aspect_ratio=ASPECT,
-                           gap_h=GAP, gap_v=GAP, edge_gap=GAP,
-                           seed=median_seed, options=opts)
-        packer.add_many(boxes)
-        median_result = packer.pack()
+        median_result = bc.pack(boxes, infill=True, balanced=balanced, aspect_ratio=ASPECT,
+                                gap_h=GAP, gap_v=GAP, edge_gap=GAP, seed=median_seed)
 
         data[(label, n)] = coverages
         notables[(label, n)] = {

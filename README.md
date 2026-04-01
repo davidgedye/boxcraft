@@ -32,6 +32,7 @@ result = bc.pack(
     boxes,
 
     # Layout behaviour
+    ordered=False,      # respect input order — boxes placed left-to-right, row by row, as given
     infill=True,        # place overflow boxes in the valley spaces above shorter row items
     balanced=True,      # mountain-order within each row — tallest box in the centre
     shuffled=True,      # randomise the vertical order of rows after packing
@@ -80,7 +81,9 @@ open("output.svg", "w").write(svg)
 
 Boxes are sorted tallest-first and packed into rows using first-fit-decreasing assignment — each row scans all remaining items and defers any that don't fit, producing dense rows.
 
-With `infill=True` (the default), boxes within each row are mountain-ordered (tallest in the centre, shorter boxes radiating outward), and overflow boxes are placed into the triangular spaces above shorter items on each side — the **valley fill** step. The side with the most open valley space is filled first.
+With `infill=True` (the default), overflow boxes are placed into the triangular spaces above shorter items on each side of each row — the **valley fill** step. The side with the most open valley space is filled first.
+
+With `ordered=True`, sorting and deferred scanning are both disabled. Boxes are placed strictly left-to-right in input order; when a box doesn't fit on the current row it starts the next one. This guarantees the visual layout reflects the input sequence, at the cost of lower coverage. `ordered=True` is incompatible with `infill`, `balanced`, and `shuffled` — passing any of those as `True` alongside `ordered=True` raises a `ValueError`. Omitting them (or passing `False`) is fine; they default to `False` automatically.
 
 With `aspect_ratio` or `width` set, a binary search finds the row width that hits the target; valley fill is accounted for in this search so the result is accurate.
 

@@ -1,8 +1,6 @@
 """Render shelf vs glacier at n=20 and n=100 (balanced, non-shuffled)."""
 
 import boxcraft as bc
-from boxcraft._algorithms.shelf import ShelfOptions
-from boxcraft._algorithms.glacier import GlacierOptions
 from boxcraft.testing import UniformGenerator
 from boxcraft import render_svg
 
@@ -10,20 +8,17 @@ cases = []
 for n in (20, 100):
     gen = UniformGenerator(w_range=(10, 200), h_range=(10, 200), n=n, seed=42)
     boxes = gen.generate()
-    for algo, opts in [
-        ("shelf",   ShelfOptions(balanced=True, shuffled=False)),
-        ("glacier", GlacierOptions(balanced=True, shuffled=False)),
-    ]:
-        packer = bc.Packer(
-            algorithm=algo,
+    for algo, infill in [("shelf", False), ("glacier", True)]:
+        result = bc.pack(
+            boxes,
+            infill=infill,
+            balanced=True,
+            shuffled=False,
             aspect_ratio=1.0,
             gap_h=5,
             gap_v=5,
             seed=42,
-            options=opts,
         )
-        packer.add_many(boxes)
-        result = packer.pack()
         cases.append((result, f"n={n}"))
         print(f"{algo:8s} n={n:4d}  coverage={result.coverage:.1%}  time={result.wall_time_ms:.1f}ms")
 

@@ -1,7 +1,6 @@
 """Render balanced × justify combinations side by side."""
 
 import boxcraft as bc
-from boxcraft._algorithms.shelf import ShelfOptions
 from boxcraft.testing import UniformGenerator
 from boxcraft import render_svg
 
@@ -17,16 +16,17 @@ cases = [
 
 svgs = []
 for balanced, justify in cases:
-    packer = bc.Packer(
-        algorithm="shelf",
+    result = bc.pack(
+        boxes,
+        infill=False,
+        balanced=balanced,
+        shuffled=True,
+        justify=justify,
         aspect_ratio=1.0,
         gap_h=0.05,
         gap_v=0.05,
         seed=42,
-        options=ShelfOptions(balanced=balanced, shuffled=True, justify=justify),
     )
-    packer.add_many(boxes)
-    result = packer.pack()
     bal = "T" if balanced else "F"
     subtitle = f"U[0.1,1]² bal={bal} just={justify}"
     svgs.append(render_svg(result, subtitle=subtitle, display_px=500))

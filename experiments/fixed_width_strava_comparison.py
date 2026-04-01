@@ -44,10 +44,8 @@ for n in NS:
             if not boxes:
                 coverages.append(0.0)
                 continue
-            packer = bc.Packer(algorithm=algo, width=WIDTH,
-                               gap_h=GAP, gap_v=GAP, edge_gap=EDGE_GAP, seed=seed)
-            packer.add_many(boxes)
-            result = packer.pack()
+            result = bc.pack(boxes, infill=(algo == "glacier"), width=WIDTH,
+                             gap_h=GAP, gap_v=GAP, edge_gap=EDGE_GAP, seed=seed)
             cov = result.coverage
             coverages.append(cov * 100)
             if cov > best_cov:
@@ -59,10 +57,8 @@ for n in NS:
         median_seed = min(SEEDS, key=lambda s: abs(coverages[s] - med))
         rng = random.Random(median_seed)
         boxes = [b for b in rng.sample(all_boxes, n) if b.width <= inner_w]
-        packer = bc.Packer(algorithm=algo, width=WIDTH,
-                           gap_h=GAP, gap_v=GAP, edge_gap=EDGE_GAP, seed=median_seed)
-        packer.add_many(boxes)
-        median_result = packer.pack()
+        median_result = bc.pack(boxes, infill=(algo == "glacier"), width=WIDTH,
+                                gap_h=GAP, gap_v=GAP, edge_gap=EDGE_GAP, seed=median_seed)
 
         data[(algo, n)] = coverages
         notables[(algo, n)] = {

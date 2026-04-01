@@ -114,10 +114,8 @@ def pack_and_report(rects: list[dict], label: str) -> None:
 
     boxes = [bc.Box(r["width"], r["height"], label=r["id"], data=r) for r in rects]
     print(f"\n  {label}  (n={len(boxes)})")
-    for algo in ("shelf", "glacier"):
-        packer = bc.Packer(algorithm=algo, aspect_ratio=1.0, gap_h=0, gap_v=0)
-        packer.add_many(boxes)
-        result = packer.pack()
+    for algo, infill in (("shelf", False), ("glacier", True)):
+        result = bc.pack(boxes, infill=infill, aspect_ratio=1.0, gap_h=0, gap_v=0)
         valley = sum(1 for p in result.placements if p.meta and p.meta.get("valley_fill"))
         print(f"    {algo:8s}  coverage={result.coverage:.1%}  "
               f"bbox={result.bounding_box[0]:.5f}×{result.bounding_box[1]:.5f}  "

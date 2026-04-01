@@ -97,7 +97,7 @@ if __name__ == "__main__":
     gen = UniformGenerator(w_range=(0.1, 1.0), h_range=(0.1, 1.0), n=100, seed=42)
     boxes = gen.generate()
 
-    result = bc.pack(boxes, algorithm="shelf", aspect_ratio=1.0)
+    result = bc.pack(boxes, infill=False, aspect_ratio=1.0)
 
     print(f"n         : {len(result.placements)}")
     print(f"coverage  : {result.coverage:.1%}")

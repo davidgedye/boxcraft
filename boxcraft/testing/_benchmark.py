@@ -4,12 +4,18 @@ Benchmark runner for head-to-head algorithm comparisons.
 
 from __future__ import annotations
 
-import time
 from dataclasses import dataclass, field
 
 import boxcraft as bc
 from boxcraft._types import Box, PackResult
 from boxcraft.testing._generators import BoxGenerator
+
+
+_ALGO_KWARGS: dict[str, dict] = {
+    "shelf":   {"infill": False},
+    "glacier": {"infill": True},
+}
+_DEFAULT_ALGORITHMS = list(_ALGO_KWARGS)
 
 
 @dataclass
@@ -77,8 +83,8 @@ class Benchmark:
 
     Parameters
     ----------
-    algorithms  : list of algorithm names; defaults to all registered algorithms
-    aspect_ratio, gap_h, gap_v, edge_gap : passed to every Packer
+    algorithms  : list of algorithm names ("shelf", "glacier"); defaults to both
+    aspect_ratio, gap_h, gap_v, edge_gap : passed to every pack() call
     """
 
     def __init__(
@@ -90,7 +96,7 @@ class Benchmark:
         gap_v: float = 0.0,
         edge_gap: float = 0.0,
     ) -> None:
-        self._algorithms = algorithms or bc.algorithms()
+        self._algorithms = algorithms or _DEFAULT_ALGORITHMS
         self._aspect_ratio = aspect_ratio
         self._gap_h = gap_h
         self._gap_v = gap_v
@@ -102,7 +108,7 @@ class Benchmark:
         generator: BoxGenerator | None = None,
     ) -> BenchmarkReport:
         report = BenchmarkReport(
-            generator_name=generator.name if generator else f"(ad hoc)",
+            generator_name=generator.name if generator else "(ad hoc)",
             n_boxes=len(boxes),
             pack_options={
                 "aspect_ratio": self._aspect_ratio,
@@ -113,16 +119,16 @@ class Benchmark:
         )
 
         for algo in self._algorithms:
-            packer = bc.Packer(
-                algorithm=algo,
+            algo_kwargs = _ALGO_KWARGS.get(algo, {})
+            result = bc.pack(
+                boxes,
+                **algo_kwargs,
                 aspect_ratio=self._aspect_ratio,
                 gap_h=self._gap_h,
                 gap_v=self._gap_v,
                 edge_gap=self._edge_gap,
                 seed=0,
             )
-            packer.add_many(boxes)
-            result = packer.pack()
 
             report.results.append(AlgorithmResult(
                 algorithm=algo,

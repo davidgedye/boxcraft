@@ -23,9 +23,7 @@ for n in NS:
         for seed in SEEDS:
             gen = UniformGenerator(w_range=(10, 200), h_range=(10, 200), n=n, seed=seed)
             boxes = gen.generate()
-            packer = bc.Packer(algorithm=algo, aspect_ratio=1.0, gap_h=GAP, gap_v=GAP)
-            packer.add_many(boxes)
-            result = packer.pack()
+            result = bc.pack(boxes, infill=(algo == "glacier"), aspect_ratio=1.0, gap_h=GAP, gap_v=GAP)
             cov = result.coverage
             coverages.append(cov * 100)
             if cov > best_cov:

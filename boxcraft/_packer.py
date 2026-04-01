@@ -12,9 +12,10 @@ from boxcraft._algorithms.glacier import pack as _glacier_pack, GlacierOptions
 def pack(
     boxes: Iterable[Box | tuple[float, float]],
     *,
-    infill: bool = True,
-    balanced: bool = True,
-    shuffled: bool = True,
+    ordered: bool = False,
+    infill: bool | None = None,
+    balanced: bool | None = None,
+    shuffled: bool | None = None,
     justify: str = "center",
     aspect_ratio: float | None = None,
     width: float | None = None,
@@ -29,9 +30,16 @@ def pack(
     Parameters
     ----------
     boxes        : boxes to pack — Box instances or (width, height) tuples
+    ordered      : respect input order — boxes are placed left-to-right, row by
+                   row, in the order given.  Silently forces infill, balanced,
+                   and shuffled to False unless any of those are explicitly set
+                   to True, in which case a ValueError is raised.
     infill       : use valley fill (glacier) when True, plain shelf when False
+                   (default True, or False when ordered=True)
     balanced     : mountain-order boxes within each row (tallest in centre)
+                   (default True, or False when ordered=True)
     shuffled     : randomise vertical row order after packing
+                   (default True, or False when ordered=True)
     justify      : "center" or "left" — horizontal row alignment
     aspect_ratio : target width/height ratio for the bounding box
     width        : fix container width exactly and minimise height;
@@ -44,19 +52,38 @@ def pack(
     if aspect_ratio is not None and width is not None:
         raise ValueError("aspect_ratio and width are mutually exclusive")
 
+    if ordered:
+        if infill is True:
+            raise ValueError("infill=True conflicts with ordered=True: valley fill reorders boxes")
+        if balanced is True:
+            raise ValueError("balanced=True conflicts with ordered=True: mountain ordering reorders boxes within rows")
+        if shuffled is True:
+            raise ValueError("shuffled=True conflicts with ordered=True: row shuffling reorders rows")
+
+    _infill   = False if ordered else (True  if infill   is None else infill)
+    _balanced = False if ordered else (True  if balanced is None else balanced)
+    _shuffled = False if ordered else (True  if shuffled is None else shuffled)
+
     box_list = [_coerce_box(b) for b in boxes]
     rng = random.Random(seed)
     t0 = time.perf_counter()
 
-    if infill:
-        opts = GlacierOptions(balanced=balanced, shuffled=shuffled, justify=justify)
+    if ordered:
+        opts = ShelfOptions(balanced=_balanced, shuffled=_shuffled, justify=justify, ordered=True)
+        placements = _shelf_pack(
+            box_list, gap_h=gap_h, gap_v=gap_v, edge_gap=edge_gap,
+            aspect_ratio=aspect_ratio, width=width, rng=rng, options=opts,
+        )
+        algo_name = "ordered"
+    elif _infill:
+        opts = GlacierOptions(balanced=_balanced, shuffled=_shuffled, justify=justify)
         placements = _glacier_pack(
             box_list, gap_h=gap_h, gap_v=gap_v, edge_gap=edge_gap,
             aspect_ratio=aspect_ratio, width=width, rng=rng, options=opts,
         )
         algo_name = "glacier"
     else:
-        opts = ShelfOptions(balanced=balanced, shuffled=shuffled, justify=justify)
+        opts = ShelfOptions(balanced=_balanced, shuffled=_shuffled, justify=justify)
         placements = _shelf_pack(
             box_list, gap_h=gap_h, gap_v=gap_v, edge_gap=edge_gap,
             aspect_ratio=aspect_ratio, width=width, rng=rng, options=opts,

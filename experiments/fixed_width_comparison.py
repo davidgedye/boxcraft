@@ -35,10 +35,8 @@ for n in NS:
         for seed in SEEDS:
             gen = UniformGenerator(w_range=(10, 200), h_range=(10, 200), n=n, seed=seed)
             boxes = gen.generate()
-            packer = bc.Packer(algorithm=algo, width=WIDTH,
-                               gap_h=GAP, gap_v=GAP, edge_gap=EDGE_GAP, seed=seed)
-            packer.add_many(boxes)
-            result = packer.pack()
+            result = bc.pack(boxes, infill=(algo == "glacier"), width=WIDTH,
+                             gap_h=GAP, gap_v=GAP, edge_gap=EDGE_GAP, seed=seed)
             cov = result.coverage
             coverages.append(cov * 100)
             if cov > best_cov:
@@ -51,10 +49,8 @@ for n in NS:
         median_seed = min(SEEDS, key=lambda s: abs(coverages[s] - med))
         gen = UniformGenerator(w_range=(10, 200), h_range=(10, 200), n=n, seed=median_seed)
         boxes = gen.generate()
-        packer = bc.Packer(algorithm=algo, width=WIDTH,
-                           gap_h=GAP, gap_v=GAP, edge_gap=EDGE_GAP, seed=median_seed)
-        packer.add_many(boxes)
-        median_result = packer.pack()
+        median_result = bc.pack(boxes, infill=(algo == "glacier"), width=WIDTH,
+                                gap_h=GAP, gap_v=GAP, edge_gap=EDGE_GAP, seed=median_seed)
 
         data[(algo, n)] = coverages
         notables[(algo, n)] = {

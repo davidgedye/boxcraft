@@ -33,6 +33,7 @@ class ShelfOptions:
     balanced: bool = False        # mountain-order boxes within each row
     shuffled: bool = False        # shuffle row order after packing
     justify: str = "center"       # horizontal row alignment: "left" or "center"
+    ordered: bool = False         # strict input-order placement (no sort, no deferral)
 
 
 # ---------------------------------------------------------------------------
@@ -74,6 +75,40 @@ def _assign_rows(
             break
         rows.append(row)
         queue = leftover
+    return rows
+
+
+def _assign_rows_ordered(
+    pairs: list[tuple[int, Box]],
+    row_width: float,
+    gap_h: float,
+    edge_gap: float,
+) -> list[list[tuple[int, Box]]]:
+    """
+    Sequential row assignment: boxes go in input order, left-to-right.
+    If a box doesn't fit on the current row, it starts a new one.
+    No sorting, no deferred scanning.
+    """
+    inner_w = row_width - 2 * edge_gap
+    rows: list[list[tuple[int, Box]]] = []
+    row: list[tuple[int, Box]] = []
+    cur_x = 0.0
+
+    for orig_idx, box in pairs:
+        bw = box.width
+        if not row:
+            row.append((orig_idx, box))
+            cur_x = bw
+        elif bw <= inner_w and cur_x + gap_h + bw <= inner_w:
+            row.append((orig_idx, box))
+            cur_x += gap_h + bw
+        else:
+            rows.append(row)
+            row = [(orig_idx, box)]
+            cur_x = bw
+
+    if row:
+        rows.append(row)
     return rows
 
 
@@ -160,7 +195,13 @@ def pack(
         return []
 
     opts = options or ShelfOptions()
-    sorted_pairs = sorted(enumerate(boxes), key=lambda p: -p[1].height)
+
+    if opts.ordered:
+        input_pairs = list(enumerate(boxes))
+        assign_fn = _assign_rows_ordered
+    else:
+        input_pairs = sorted(enumerate(boxes), key=lambda p: -p[1].height)
+        assign_fn = _assign_rows
 
     total_area = sum(b.width * b.height for b in boxes)
     w_min = max(b.width for b in boxes) + 2 * edge_gap
@@ -173,17 +214,17 @@ def pack(
                 f"width {width} is too narrow: the widest box requires at least {w_min}"
             )
         row_width = width
-        rows = _assign_rows(sorted_pairs, row_width, gap_h, edge_gap)
+        rows = assign_fn(input_pairs, row_width, gap_h, edge_gap)
     elif aspect_ratio is None:
         row_width = max(math.sqrt(total_area), w_min)
-        rows = _assign_rows(sorted_pairs, row_width, gap_h, edge_gap)
+        rows = assign_fn(input_pairs, row_width, gap_h, edge_gap)
     else:
         lo, hi = w_min, w_max
         best_rows: list[list[tuple[int, Box]]] | None = None
         best_row_width = w_max
         for _ in range(15):
             mid = (lo + hi) / 2
-            candidate = _assign_rows(sorted_pairs, mid, gap_h, edge_gap)
+            candidate = assign_fn(input_pairs, mid, gap_h, edge_gap)
             row_heights = [max(b.height for _, b in row) for row in candidate]
             bb_w = mid
             bb_h = sum(row_heights) + gap_v * (len(row_heights) - 1) + 2 * edge_gap
@@ -194,7 +235,7 @@ def pack(
                 best_rows = candidate
                 best_row_width = mid
         row_width = best_row_width
-        rows = best_rows or _assign_rows(sorted_pairs, w_max, gap_h, edge_gap)
+        rows = best_rows or assign_fn(input_pairs, w_max, gap_h, edge_gap)
 
     if not rows:
         rows = []
