@@ -4,6 +4,14 @@
 
 boxcraft packs a collection of rectangles into a compact, visually pleasing layout. It is designed for real-world use cases where both coverage (minimising wasted space) and aesthetics (balanced, readable arrangements) matter.
 
+## Demo
+
+![250 GPS trail bounding boxes packed into a square](demo/demo.svg)
+
+250 boxes sampled from a real-world dataset of GPS-tracked outdoor activities (runs, hikes, walks), packed into a square layout using the glacier infill algorithm. Box colour encodes aspect ratio: tall/portrait boxes are violet, near-square are green, wide/landscape are red-orange. Coverage: 87.8%.
+
+The `demo/` folder contains the script that generated this image.
+
 ## Usage
 
 ```python
@@ -109,6 +117,7 @@ pip install -e .
 
 ```
 boxcraft/       Python package (algorithms, types, renderer)
+demo/           Demo image and the script that generates it
 experiments/    A/B comparisons and coverage histograms
 datasets/       Rectangle datasets for experiments
 utils/          Data preparation scripts
